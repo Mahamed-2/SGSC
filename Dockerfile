@@ -5,6 +5,12 @@
 
 # ── STAGE 1: Restore ──────────────────────────────────────────────────────────
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS restore
+LABEL org.opencontainers.image.source="https://github.com/Mahamed-2/SGSC"
+LABEL org.opencontainers.image.description="ClubOS API - Al-Faisaly FC Demo"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.vendor="ClubOS"
+LABEL maintainer="mahamed2"
+
 WORKDIR /src
 
 COPY ["src/ClubOS.API/ClubOS.API.csproj",            "src/ClubOS.API/"]

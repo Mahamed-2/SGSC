@@ -28,8 +28,7 @@ public static class DependencyInjection
             );
 
             // Enable detailed errors only in non-production
-            if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-                    .Equals("Production", StringComparison.OrdinalIgnoreCase))
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")?.Equals("Production", StringComparison.OrdinalIgnoreCase) != true)
             {
                 options.EnableSensitiveDataLogging();
                 options.EnableDetailedErrors();
@@ -72,8 +71,8 @@ public static class DependencyInjection
 
         // ── HEALTH CHECKS ─────────────────────────────────────────────────────
         services.AddHealthChecks()
-            .AddNpgsql(configuration.GetConnectionString("DefaultConnection")!, name: "postgresql")
-            .AddRedis(configuration.GetConnectionString("Redis")!, name: "redis");
+            .AddNpgsql(npgsqlConnectionString: configuration.GetConnectionString("DefaultConnection")!, name: "postgresql")
+            .AddRedis(redisConnectionString: configuration.GetConnectionString("Redis")!, name: "redis");
 
         return services;
     }

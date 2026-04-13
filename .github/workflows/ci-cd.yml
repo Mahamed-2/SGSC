@@ -8,8 +8,8 @@ on:
 
 env:
   DOTNET_VERSION: "10.0.x"
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/clubos-api
+  REGISTRY: docker.io
+  IMAGE_NAME: mahamed2/clubos-api
 
 jobs:
   # ── BUILD & TEST ────────────────────────────────────────────────────────────
@@ -46,17 +46,15 @@ jobs:
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
-      packages: write
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Log in to GHCR
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v5
