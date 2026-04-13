@@ -47,7 +47,7 @@ public sealed class Permission : BaseEntity
 }
 
 /// <summary>Joining table: wires a ClubOS role to one or more permissions.</summary>
-public sealed class RolePermission
+public sealed class RolePermission : TenantEntity
 {
     public string    RoleId       { get; set; } = default!;  // ASP.NET Identity role ID
     public Guid      PermissionId { get; set; }
@@ -58,7 +58,7 @@ public sealed class RolePermission
 }
 
 /// <summary>Joining table: maps a user to one or more departments for scoped access.</summary>
-public sealed class UserDepartment
+public sealed class UserDepartment : TenantEntity
 {
     public string     UserId       { get; set; } = default!;
     public Guid       DepartmentId { get; set; }
@@ -66,6 +66,9 @@ public sealed class UserDepartment
 
     /// <summary>Whether the user acts as the department admin within this dept.</summary>
     public bool IsDepartmentAdmin { get; set; }
+    
+    /// <summary>Whether this is the user's primary department (used for default UI scoping).</summary>
+    public bool IsPrimary { get; set; } = true;
 }
 
 public enum PermissionAction { Read, Write, Delete, Approve, Export }

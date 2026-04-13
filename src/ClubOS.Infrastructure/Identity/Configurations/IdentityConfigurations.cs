@@ -58,7 +58,7 @@ public sealed class UserDepartmentConfiguration : IEntityTypeConfiguration<UserD
 {
     public void Configure(EntityTypeBuilder<UserDepartment> builder)
     {
-        builder.HasKey(e => new { e.UserId, e.DepartmentId });
+        builder.HasKey(e => e.Id);
 
         builder.HasOne<ApplicationUser>()
                .WithMany(u => u.UserDepartments)
@@ -76,7 +76,7 @@ public sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RoleP
 {
     public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
-        builder.HasKey(rp => new { rp.RoleId, rp.PermissionId, rp.DepartmentId });
+        builder.HasKey(rp => rp.Id);
 
         builder.HasOne<ApplicationRole>()
                .WithMany(r => r.RolePermissions)
