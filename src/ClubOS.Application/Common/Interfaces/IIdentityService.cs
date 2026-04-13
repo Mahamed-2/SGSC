@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 namespace ClubOS.Application.Common.Interfaces;
 
 public interface IAuthService
