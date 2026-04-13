@@ -14,5 +14,5 @@ public class UserDepartment : TenantEntity
     public bool IsPrimary { get; set; } = true;
 
     // Navigation properties
-    public virtual Department Department { get; set; } = null!;
+    public Department Department { get; set; } = null!;
 }
