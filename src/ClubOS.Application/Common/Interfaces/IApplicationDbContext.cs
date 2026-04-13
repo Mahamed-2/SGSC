@@ -1,4 +1,5 @@
 using ClubOS.Domain.Entities;
+using ClubOS.Domain.Entities.Identity;
 using ClubOS.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

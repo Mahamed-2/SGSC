@@ -1,4 +1,5 @@
 using FluentValidation;
+using ClubOS.Application.Features.TrainingSessions.Commands;
 
 namespace ClubOS.Application.Features.TrainingSessions.Validators;
 

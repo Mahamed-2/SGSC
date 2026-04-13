@@ -1,4 +1,5 @@
 using FluentValidation;
+using ClubOS.Application.Features.Players.Commands;
 
 namespace ClubOS.Application.Features.Players.Validators;
 
