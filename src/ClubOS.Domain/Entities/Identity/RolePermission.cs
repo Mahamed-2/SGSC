@@ -11,5 +11,5 @@ public class RolePermission : TenantEntity
     public Guid PermissionId { get; set; }
 
     // Navigation properties
-    public virtual Permission Permission { get; set; } = null!;
+    public Permission Permission { get; set; } = null!;
 }
