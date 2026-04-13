@@ -1,0 +1,71 @@
+{
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "members": "الأعضاء",
+    "academies": "الأكاديميات",
+    "kpis": "مؤشرات الأداء",
+    "football": "عمليات كرة القدم",
+    "medical": "القسم الطبي",
+    "finance": "المالية والاستراتيجية",
+    "hr": "الموارد البشرية",
+    "feedback": "التغذية الراجعة",
+    "admin": "إدارة النظام",
+    "settings": "الإعدادات",
+    "collapse": "طي القائمة"
+  },
+  "topbar": {
+    "profile": "الملف الشخصي",
+    "signOut": "تسجيل الخروج",
+    "settings": "الإعدادات",
+    "notifications": "التنبيهات",
+    "search": "بحث..."
+  },
+  "dashboard": "لوحة التحكم",
+  "members": "الأعضاء",
+  "academies": "الأكاديميات",
+  "kpis": "مؤشرات الأداء",
+  "feedback": "التغذية الراجعة",
+  "settings": "الإعدادات",
+  "admin": "إدارة النظام",
+  "welcome": "مرحباً بك",
+  "signOut": "تسجيل الخروج",
+  "profile": "الملف الشخصي",
+  "addMember": "إضافة عضو",
+  "filterBy": "تصفية حسب",
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "suspended": "موقوف",
+    "graduated": "متخرج"
+  },
+  "kpiLabels": {
+    "AttendanceRate": "معدل الحضور",
+    "MemberRetentionRate": "الاحتفاظ بالأعضاء",
+    "RevenueMonthly": "الإيرادات الشهرية",
+    "FeedbackSatisfactionScore": "نقاط الرضا",
+    "ActiveMemberCount": "الأعضاء النشطون",
+    "ChurnRate": "معدل التسرب"
+  },
+  "feedback": {
+    "open": "مفتوح",
+    "underReview": "قيد المراجعة",
+    "escalated": "تم التصعيد",
+    "resolved": "تم الحل",
+    "closed": "مغلق"
+  },
+  "errors": {
+    "notFound": "الصفحة غير موجودة",
+    "unauthorized": "غير مصرح لك بالوصول",
+    "serverError": "حدث خطأ في الخادم"
+  },
+  "auth": {
+    "sessionTimeoutTitle": "تنبيه: انتهاء الجلسة قريباً",
+    "sessionTimeoutDesc": "ستنتهي جلستك خلال {seconds} ثانية بسبب عدم النشاط لضمان حماية بياناتك.",
+    "signOut": "تسجيل الخروج",
+    "continueSession": "متابعة الجلسة",
+    "errors": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+      "invalidMfa": "رمز التحقق غير صحيح، الرجاء المحاولة مرة أخرى"
+    }
+  }
+}

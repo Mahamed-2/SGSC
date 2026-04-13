@@ -1,0 +1,446 @@
+openapi: 3.0.1
+info:
+  title: ClubOS API
+  description: Multi-tenant B2B SaaS for Saudi sports academies | نظام إدارة الأكاديميات الرياضية
+  contact:
+    name: ClubOS Team
+    email: support@clubos.sa
+  version: v1
+servers:
+  - url: /
+paths:
+  /api/v1/clubs/{id}/departments:
+    get:
+      tags:
+        - Clubs
+      summary: List departments for a given club (tenant).
+      description: العودة بقائمة الأقسام بنجاح
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListOfDepartmentDto'
+  /api/v1/clubs/{id}/players:
+    get:
+      tags:
+        - Clubs
+      summary: List players with position and status filters.
+      description: العودة بقائمة اللاعبين مع التصفية
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: position
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 25
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePaginatedResultOfPlayerDto'
+    post:
+      tags:
+        - Clubs
+      summary: Create a new player record.
+      description: تم إنشاء ملف اللاعب بنجاح
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlayerCommand'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseGuid'
+  /api/v1/clubs/{id}/players/{playerId}:
+    get:
+      tags:
+        - Clubs
+      summary: Get player detail with performance metrics history.
+      description: العودة بتفاصيل اللاعب وتاريخ الأداء
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePlayerDetailDto'
+    put:
+      tags:
+        - Clubs
+      summary: Update an existing player record.
+      description: تم تحديث بيانات اللاعب بنجاح
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlayerCommand'
+      responses:
+        204:
+          description: No Content
+  /api/v1/clubs/{id}/training-sessions:
+    get:
+      tags:
+        - Clubs
+      summary: Get training sessions calendar view for a date range.
+      description: منظور التقويم للتمارين الرياضية
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: start
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListOfTrainingSessionDto'
+    post:
+      tags:
+        - Clubs
+      summary: Schedule a new training session.
+      description: تم جدولة التمرين بنجاح
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTrainingSessionCommand'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseGuid'
+components:
+  schemas:
+    DepartmentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        nameEn:
+          type: string
+        nameAr:
+          type: string
+        isActive:
+          type: boolean
+        parentId:
+          type: string
+          format: uuid
+          nullable: true
+    PlayerDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        jerseyNumber:
+          type: integer
+        position:
+          type: string
+        status:
+          type: string
+        nationality:
+          type: string
+    PlayerDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        jerseyNumber:
+          type: integer
+        position:
+          type: string
+        status:
+          type: string
+        nationality:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        contractStart:
+          type: string
+          format: date-time
+        contractEnd:
+          type: string
+          format: date-time
+        recentMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/PerformanceMetricDto'
+    PerformanceMetricDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        metricType:
+          type: string
+        value:
+          type: number
+          format: decimal
+        recordedAtAST:
+          type: string
+          format: date-time
+        trainingSessionTitle:
+          type: string
+          nullable: true
+    TrainingSessionDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        dateTimeAST:
+          type: string
+          format: date-time
+        durationMinutes:
+          type: integer
+        location:
+          type: string
+        coachId:
+          type: string
+          format: uuid
+        coachName:
+          type: string
+        attendanceCount:
+          type: integer
+    CreatePlayerCommand:
+      type: object
+      properties:
+        clubId:
+          type: string
+          format: uuid
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        jerseyNumber:
+          type: integer
+        position:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+        nationality:
+          type: string
+        contractStart:
+          type: string
+          format: date-time
+        contractEnd:
+          type: string
+          format: date-time
+        status:
+          type: string
+    UpdatePlayerCommand:
+      type: object
+      properties:
+        clubId:
+          type: string
+          format: uuid
+        playerId:
+          type: string
+          format: uuid
+        nameAr:
+          type: string
+        nameEn:
+          type: string
+        jerseyNumber:
+          type: integer
+        position:
+          type: string
+        status:
+          type: string
+        contractEnd:
+          type: string
+          format: date-time
+    CreateTrainingSessionCommand:
+      type: object
+      properties:
+        clubId:
+          type: string
+          format: uuid
+        departmentId:
+          type: string
+          format: uuid
+        title:
+          type: string
+        dateTimeAST:
+          type: string
+          format: date-time
+        durationMinutes:
+          type: integer
+        location:
+          type: string
+        coachId:
+          type: string
+          format: uuid
+    ApiResponseListOfDepartmentDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DepartmentDto'
+        errors:
+          type: array
+          items:
+            type: string
+        messageEn:
+          type: string
+        messageAr:
+          type: string
+    ApiResponsePaginatedResultOfPlayerDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/PaginatedResultOfPlayerDto'
+    PaginatedResultOfPlayerDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerDto'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    ApiResponsePlayerDetailDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/PlayerDetailDto'
+    ApiResponseGuid:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: string
+          format: uuid
+    ApiResponseListOfTrainingSessionDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingSessionDto'
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Enter JWT token
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - Bearer: []

@@ -1,0 +1,71 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "members": "Members",
+    "academies": "Academies",
+    "kpis": "KPI Dashboard",
+    "football": "Football Ops",
+    "medical": "Medical",
+    "finance": "Finance & Strategy",
+    "hr": "Human Resources",
+    "feedback": "Feedback",
+    "admin": "System Admin",
+    "settings": "Settings",
+    "collapse": "Collapse"
+  },
+  "topbar": {
+    "profile": "Profile",
+    "signOut": "Sign Out",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "search": "Search..."
+  },
+  "dashboard": "Dashboard",
+  "members": "Members",
+  "academies": "Academies",
+  "kpis": "KPI Dashboard",
+  "feedback": "Feedback",
+  "settings": "Settings",
+  "admin": "System Admin",
+  "welcome": "Welcome",
+  "signOut": "Sign out",
+  "profile": "Profile",
+  "addMember": "Add Member",
+  "filterBy": "Filter by",
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "suspended": "Suspended",
+    "graduated": "Graduated"
+  },
+  "kpiLabels": {
+    "AttendanceRate": "Attendance Rate",
+    "MemberRetentionRate": "Member Retention",
+    "RevenueMonthly": "Monthly Revenue",
+    "FeedbackSatisfactionScore": "Satisfaction Score",
+    "ActiveMemberCount": "Active Members",
+    "ChurnRate": "Churn Rate"
+  },
+  "feedback": {
+    "open": "Open",
+    "underReview": "Under Review",
+    "escalated": "Escalated",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "unauthorized": "You are not authorized",
+    "serverError": "A server error occurred"
+  },
+  "auth": {
+    "sessionTimeoutTitle": "Session Expiring Soon",
+    "sessionTimeoutDesc": "Your session will expire in {seconds} seconds due to inactivity.",
+    "signOut": "Sign Out",
+    "continueSession": "Continue Session",
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "invalidMfa": "Invalid verification code, please try again"
+    }
+  }
+}

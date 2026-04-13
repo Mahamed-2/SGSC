@@ -1,0 +1,105 @@
+name: ClubOS CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  DOTNET_VERSION: "10.0.x"
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/clubos-api
+
+jobs:
+  # ── BUILD & TEST ────────────────────────────────────────────────────────────
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore ClubOS/ClubOS.sln
+
+      - name: Build
+        run: dotnet build ClubOS/ClubOS.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test ClubOS/ClubOS.sln --no-build --verbosity normal -c Release \
+             --collect:"XPlat Code Coverage" \
+             --results-directory ./coverage
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          directory: ./coverage
+
+  # ── DOCKER BUILD & PUSH ─────────────────────────────────────────────────────
+  docker:
+    needs: build-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ClubOS
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+  # ── DEPLOY TO AZURE APP SERVICE ─────────────────────────────────────────────
+  deploy-staging:
+    needs: docker
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Deploy to Azure App Service (Staging Slot)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: clubos-alfaisaly
+          slot-name: staging
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Swap Staging to Production
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az webapp deployment slot swap --resource-group rg-clubos-alfaisaly-demo --name app-clubos-alfaisaly --slot staging --target-slot production
+
+  # ── RELEASE TAGGING ────────────────────────────────────────────────────────
+  tag-release:
+    needs: deploy-production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tag Release
+        run: |
+          git tag v1.0.0-alfaisaly-demo
+          git push origin v1.0.0-alfaisaly-demo

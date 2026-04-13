@@ -1,0 +1,126 @@
+version: "3.9"
+
+# ═══════════════════════════════════════════════════════════════
+# ClubOS – Local Development Stack
+# Covers: Al-Faisaly FC demo (alfaisalyfc.net)
+# Tech: ASP.NET Core 10 + PostgreSQL 16 + Redis 7 + pgAdmin
+# Timezone: Arab Standard Time (Asia/Riyadh = UTC+3)
+# ═══════════════════════════════════════════════════════════════
+
+name: clubos
+
+x-common-env: &common-env
+  TZ: Asia/Riyadh
+
+services:
+
+  # ── API ────────────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    container_name: clubos_api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      <<: *common-env
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: >
+        Host=postgres;Port=5432;Database=clubos_dev;
+        Username=clubos;Password=ClubOS_Dev_2026!
+      ConnectionStrings__Redis: redis:6379
+      Jwt__Issuer: https://auth.clubos.sa
+      Jwt__Audience: https://api.clubos.sa
+      Jwt__SecretKey: DEVELOPMENT_ONLY_REPLACE_THIS_KEY_MIN64CHARS_000000000000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - clubos_net
+    volumes:
+      - api_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ── POSTGRESQL 16 ─────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: clubos_postgres
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      POSTGRES_DB: clubos_dev
+      POSTGRES_USER: clubos
+      POSTGRES_PASSWORD: ClubOS_Dev_2026!
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"   # 5433 to avoid conflict with local postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - clubos_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clubos -d clubos_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ── REDIS 7 ───────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: clubos_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ClubOS_Redis_2026!
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - clubos_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "ClubOS_Redis_2026!", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── PGADMIN (Dev only) ────────────────────────────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: clubos_pgadmin
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      PGADMIN_DEFAULT_EMAIL: admin@clubos.sa
+      PGADMIN_DEFAULT_PASSWORD: ClubOS_Admin_2026!
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - clubos_net
+    profiles:
+      - tools    # Only starts with: docker compose --profile tools up
+
+# ── NETWORKS ──────────────────────────────────────────────────────────────────
+networks:
+  clubos_net:
+    driver: bridge
+
+# ── VOLUMES ───────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  api_logs:
+    driver: local

@@ -1,0 +1,63 @@
+{
+  "GetClubHealthScore": {
+    "clubId": "550e8400-e29b-41d4-a716-446655440000",
+    "totalScore": 79.00,
+    "categoryScores": {
+      "Football Ops": 75.00,
+      "Medical": 82.00,
+      "Finance": 68.00,
+      "HR": 91.00
+    },
+    "calculatedAt": "2026-04-13T17:00:00Z"
+  },
+  "GetFootballKPIs": [
+    {
+      "nameEn": "Match Win Rate",
+      "nameAr": "نسبة الفوز بالمباريات",
+      "value": 62.5,
+      "unit": "%",
+      "trend": "Up"
+    },
+    {
+      "nameEn": "Goals Per Match",
+      "nameAr": "الأهداف لكل مباراة",
+      "value": 2.1,
+      "unit": "Goals",
+      "trend": "Stable"
+    }
+  ],
+  "GetPlayerPerformanceTrends": {
+    "playerId": "a1b2c3d4-e5f6-4a5b-b6c7-d8e9f0a1b2c3",
+    "playerName": "Al-Faisaly Player 1",
+    "dataPoints": [
+      {
+        "date": "2026-04-10T08:00:00Z",
+        "metricType": "DistanceCovered",
+        "value": 10.2
+      },
+      {
+        "date": "2026-04-12T08:00:00Z",
+        "metricType": "DistanceCovered",
+        "value": 11.5
+      }
+    ]
+  },
+  "GetComplianceStatus": {
+    "clubId": "550e8400-e29b-41d4-a716-446655440000",
+    "completionPercentage": 75.0,
+    "requirements": [
+      {
+        "nameEn": "Saudi Governance Pillar 1",
+        "nameAr": "ركيزة الحوكمة السعودية 1",
+        "isMet": true,
+        "level": "Mandatory"
+      },
+      {
+        "nameEn": "Youth Academy Certification",
+        "nameAr": "شهادة أكاديمية الفئات السنية",
+        "isMet": false,
+        "level": "Gold"
+      }
+    ]
+  }
+}

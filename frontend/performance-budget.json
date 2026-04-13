@@ -1,0 +1,35 @@
+{
+  "resource-budgets": [
+    {
+      "label": "Initial Load JS",
+      "requestCount": 5,
+      "size": "300kb"
+    },
+    {
+      "label": "Images (Home)",
+      "requestCount": 3,
+      "size": "150kb"
+    },
+    {
+      "label": "Total Uncompressed",
+      "size": "2mb"
+    }
+  ],
+  "timing-budgets": [
+    {
+      "label": "Largest Contentful Paint (LCP)",
+      "metric": "largest-contentful-paint",
+      "budget": 2500
+    },
+    {
+      "label": "Cumulative Layout Shift (CLS)",
+      "metric": "cumulative-layout-shift",
+      "budget": 0.1
+    },
+    {
+      "label": "Total Blocking Time (TBT)",
+      "metric": "total-blocking-time",
+      "budget": 200
+    }
+  ]
+}

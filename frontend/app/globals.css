@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ──────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap");
+
+/* ── CSS Custom Properties (Design Tokens) ─────────────────────────────────── */
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-cairo: "Cairo", sans-serif;
+
+  /* Brand - Al-Faisaly FC Official Palette */
+  --color-brand:        #006633; /* Primary Al-Faisaly Green */
+  --color-brand-dark:   #004d26;
+  --color-brand-light:  #2d9e2d;
+  --color-accent-gold:  #D4AF37; /* Al-Faisaly Gold */
+
+  /* Surfaces */
+  --color-bg:           #f8fafc;
+  --color-surface:      #ffffff;
+  --color-border:       #e2e8f0;
+
+  /* Text */
+  --color-ink:          #0f172a;
+  --color-ink-muted:    #475569;
+  --color-ink-faint:    #94a3b8;
+
+  /* Sidebar */
+  --sidebar-width:      16rem;
+  --sidebar-collapsed:  4.5rem;
+  --topbar-height:      3.75rem;
+}
+
+/* ── Dark Mode ──────────────────────────────────────────────────────────────── */
+.dark {
+  --color-bg:           #0b1120;
+  --color-surface:      #131c2e;
+  --color-border:       #1e2d40;
+  --color-ink:          #f1f5f9;
+  --color-ink-muted:    #94a3b8;
+  --color-ink-faint:    #475569;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-surface-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface-muted text-ink font-sans antialiased;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+  }
+
+  /* Arabic content uses Cairo; RTL direction */
+  [lang="ar"],
+  [dir="rtl"] {
+    font-family: var(--font-cairo);
+    direction: rtl;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+/* ── Component Utilities ────────────────────────────────────────────────────── */
+@layer components {
+  .card {
+    @apply bg-white dark:bg-surface rounded-2xl border border-surface-border shadow-card;
+  }
+
+  .card-hover {
+    @apply transition-shadow duration-200 hover:shadow-card-hover;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2
+           text-sm font-medium text-white shadow-sm
+           hover:bg-brand-600 active:bg-brand-700
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors duration-150;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-xl px-4 py-2
+           text-sm font-medium text-ink-muted
+           hover:bg-surface-subtle hover:text-ink
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500
+           transition-colors duration-150;
+  }
+
+  /* Skeleton loading shimmer */
+  .skeleton {
+    @apply relative overflow-hidden bg-surface-subtle rounded-lg;
+  }
+  .skeleton::after {
+    @apply absolute inset-0;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      transparent 25%,
+      rgba(255,255,255,0.6) 50%,
+      transparent 75%
+    );
+    animation: shimmer 1.8s infinite;
+    transform: translateX(-100%);
+  }
+}
+
+/* ── Scrollbar styling ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { @apply rounded-full bg-surface-border; }
+::-webkit-scrollbar-thumb:hover { @apply bg-ink-faint; }
+
+/* ── RTL sidebar animation override ─────────────────────────────────────────── */
+[dir="rtl"] .slide-in { animation-name: slide-in-right; }
+[dir="ltr"] .slide-in { animation-name: slide-in-left; }

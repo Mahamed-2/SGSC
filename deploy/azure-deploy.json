@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appName": { "type": "string", "defaultValue": "clubos-demo-app" },
+        "dbName": { "type": "string", "defaultValue": "clubos-db" },
+        "location": { "type": "string", "defaultValue": "qatarcentral" }
+    },
+    "variables": {
+        "hostingPlanName": "[concat(parameters('appName'), '-plan')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2021-03-01",
+            "name": "[variables('hostingPlanName')]",
+            "location": "[parameters('location')]",
+            "sku": { "name": "B1", "tier": "Basic" },
+            "kind": "linux",
+            "properties": { "reserved": true }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('appName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [ "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]" ],
+            "kind": "app,linux",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "siteConfig": {
+                    "linuxFxVersion": "DOTNETCORE|10.0",
+                    "appSettings": [
+                        { "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" },
+                        { "name": "WEBSITE_TIME_ZONE", "value": "Arab Standard Time" }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+            "apiVersion": "2021-06-01",
+            "name": "[parameters('dbName')]",
+            "location": "[parameters('location')]",
+            "sku": { "name": "Standard_D2s_v3", "tier": "GeneralPurpose" },
+            "properties": {
+                "version": "14",
+                "storage": { "storageSizeGB": 32 }
+            }
+        }
+    ]
+}
