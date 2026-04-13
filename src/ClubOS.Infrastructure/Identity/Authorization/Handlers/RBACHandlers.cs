@@ -1,5 +1,6 @@
 using ClubOS.Application.Common.Interfaces;
 using ClubOS.Domain.Entities.Identity;
+using ClubOS.Domain.Interfaces;
 using ClubOS.Infrastructure.Identity.Authorization.Requirements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;

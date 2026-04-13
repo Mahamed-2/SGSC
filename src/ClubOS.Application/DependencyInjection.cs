@@ -1,4 +1,6 @@
 using ClubOS.Application.Common.Behaviors;
+using ClubOS.Application.Common.Interfaces;
+using ClubOS.Application.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

@@ -39,12 +39,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends tzdata curl \
     && echo $TZ > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
 
-# Non-root user for security
-RUN groupadd --gid 1000 appgroup && useradd --uid 1000 --gid appgroup --shell /bin/sh appuser
-RUN mkdir -p /app/logs && chown -R appuser:appgroup /app
+# Use the default non-root 'app' user provided by .NET 10 base image
+RUN mkdir -p /app/logs && chown -R app:app /app
 
-COPY --from=publish --chown=appuser:appgroup /app/publish .
-USER appuser
+COPY --from=publish --chown=app:app /app/publish .
+USER app
 
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
