@@ -1,13 +1,8 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
+import { routing } from "./i18n/routing";
 
-const intlMiddleware = createMiddleware({
-  // A list of all locales that are supported
-  locales: ["ar-SA", "en-US"],
-  // Used when no locale matches
-  defaultLocale: "ar-SA",
-  localePrefix: "always", // Use "always" for clean URL routing as planned
-});
+const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

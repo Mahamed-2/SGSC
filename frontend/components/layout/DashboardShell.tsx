@@ -10,6 +10,7 @@ import { useSidebar } from "@/lib/store/useStore";
 interface DashboardShellProps {
   children: React.ReactNode;
   title?: { en: string; ar: string };
+  subtitle?: { en: string; ar: string };
   actions?: React.ReactNode;
 }
 
@@ -17,7 +18,7 @@ interface DashboardShellProps {
  * DashboardShell — the main chrome wrapper for all dashboard pages.
  * Composes Sidebar + Topbar + content area with RTL-aware flex direction.
  */
-export function DashboardShell({ children, title, actions }: DashboardShellProps) {
+export function DashboardShell({ children, title, subtitle, actions }: DashboardShellProps) {
   const { isRTL, isArabic } = useLocalization();
   const { collapsed }       = useSidebar();
 
@@ -52,7 +53,7 @@ export function DashboardShell({ children, title, actions }: DashboardShellProps
         <main id="main-content" className="flex-1 overflow-y-auto" tabIndex={-1}>
           <div className="max-w-screen-2xl mx-auto px-6 py-6 space-y-6">
             {/* Page header */}
-            {(title || actions) && (
+            {(title || subtitle || actions) && (
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
                   <Breadcrumbs />
@@ -60,6 +61,11 @@ export function DashboardShell({ children, title, actions }: DashboardShellProps
                     <h1 className="text-2xl font-bold text-ink">
                       {isArabic ? title.ar : title.en}
                     </h1>
+                  )}
+                  {subtitle && (
+                    <p className="text-ink-muted text-sm">
+                      {isArabic ? subtitle.ar : subtitle.en}
+                    </p>
                   )}
                 </div>
                 {actions && (

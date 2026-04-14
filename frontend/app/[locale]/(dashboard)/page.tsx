@@ -12,7 +12,7 @@ import { DemoTour } from "@/components/dashboard/DemoTour";
 import { useDemo } from "@/providers/DemoProvider";
 import { useExport } from "@/hooks/useExport";
 import { 
-  Users, Trophy, Landmark, Heart pulse, 
+  Users, Trophy, Landmark, Activity, 
   FileCheck, Download, Calendar, ArrowRightLeft, Target,
   PlayCircle
 } from "lucide-react";
@@ -34,7 +34,7 @@ export default function DashboardPage() {
 
   const departments = [
     { code: "FOOTBALL", en: "Football Ops", ar: "عمليات كرة القدم", val: 82, unit: "%", trend: "Up", status: "success", icon: Target },
-    { code: "MEDICAL", en: "Medical", ar: "القسم الطبي", val: 71, unit: "%", trend: "Down", status: "warning", icon: Heart pulse },
+    { code: "MEDICAL", en: "Medical", ar: "القسم الطبي", val: 71, unit: "%", trend: "Down", status: "warning", icon: Activity },
     { code: "FINANCE", en: "Finance", ar: "المالية", val: 89, unit: "SAR", trend: "Up", status: "success", icon: Landmark },
     { code: "HR", en: "Human Resources", ar: "الموارد البشرية", val: 72, unit: "%", trend: "Stable", status: "warning", icon: Users },
     { code: "STRATEGY", en: "Strategy", ar: "الاستراتيجية", val: 95, unit: "%", trend: "Up", status: "success", icon: FileCheck },
@@ -42,8 +42,6 @@ export default function DashboardPage() {
   ];
 
   const { isDemoMode, toggleDemoMode } = useDemo();
-  
-  const [selectedDept, setSelectedDept] = useState<{ code: string; en: string; ar: string } | null>(null);
 
   return (
     <DashboardShell
