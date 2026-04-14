@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace ClubOS.Infrastructure;
 
@@ -71,8 +72,8 @@ public static class DependencyInjection
 
         // ── HEALTH CHECKS ─────────────────────────────────────────────────────
         services.AddHealthChecks()
-            .AddNpgsql(npgsqlConnectionString: configuration.GetConnectionString("DefaultConnection")!, name: "postgresql")
-            .AddRedis(redisConnectionString: configuration.GetConnectionString("Redis")!, name: "redis");
+            .AddNpgsql(configuration.GetConnectionString("DefaultConnection")!, "postgresql")
+            .AddRedis(configuration.GetConnectionString("Redis")!, "redis");
 
         return services;
     }
