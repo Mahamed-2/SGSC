@@ -13,10 +13,10 @@ namespace ClubOS.API.Controllers;
 [Route("api/v1/clubs/{clubId}/football")]
 public class FootballController : ControllerBase
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public FootballController(IApplicationDbContext context, ITenantContext tenantContext)
+    public FootballController(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -31,7 +31,7 @@ public class FootballController : ControllerBase
             .AsNoTracking()
             .ToListAsync();
 
-        return Ok(ApiResponse<List<FootballDrill>>.SuccessResponse(drills));
+        return Ok(ApiResponse<List<FootballDrill>>.Ok(drills));
     }
 
     [HttpGet("match-plans")]
@@ -44,7 +44,7 @@ public class FootballController : ControllerBase
             .OrderByDescending(p => p.MatchDateAST)
             .ToListAsync();
 
-        return Ok(ApiResponse<List<MatchPlan>>.SuccessResponse(plans));
+        return Ok(ApiResponse<List<MatchPlan>>.Ok(plans));
     }
 
     [HttpPost("match-plans")]
@@ -55,6 +55,6 @@ public class FootballController : ControllerBase
         _context.MatchPlans.Add(plan);
         await _context.SaveChangesAsync();
 
-        return Ok(ApiResponse<Guid>.SuccessResponse(plan.Id));
+        return Ok(ApiResponse<Guid>.Ok(plan.Id));
     }
 }

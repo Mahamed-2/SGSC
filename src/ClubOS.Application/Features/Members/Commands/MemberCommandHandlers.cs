@@ -9,10 +9,10 @@ namespace ClubOS.Application.Features.Members.Commands;
 
 public sealed class CreateMemberCommandHandler : IRequestHandler<CreateMemberCommand, Guid>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public CreateMemberCommandHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public CreateMemberCommandHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -45,10 +45,10 @@ public sealed class CreateMemberCommandHandler : IRequestHandler<CreateMemberCom
 
 public sealed class SuspendMemberCommandHandler : IRequestHandler<SuspendMemberCommand, bool>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public SuspendMemberCommandHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public SuspendMemberCommandHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

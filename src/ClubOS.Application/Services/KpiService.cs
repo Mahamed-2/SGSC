@@ -7,9 +7,9 @@ namespace ClubOS.Application.Services;
 
 public class KpiService : IKpiService
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
 
-    public KpiService(IApplicationDbContext context)
+    public KpiService(IAppDbContext context)
     {
         _context = context;
     }

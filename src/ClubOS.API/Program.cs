@@ -7,7 +7,8 @@ using ClubOS.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -16,7 +17,7 @@ using Serilog.Events;
 using System.Globalization;
 using System.Text;
 
-namespace ClubOS.API;
+
 
 // ── BOOTSTRAP SERILOG ─────────────────────────────────────────────────────────
 Log.Logger = new LoggerConfiguration()
@@ -59,7 +60,9 @@ try
         opts.DefaultApiVersion = new ApiVersion(1, 0);
         opts.AssumeDefaultVersionWhenUnspecified = true;
         opts.ReportApiVersions = true;
-    }).AddApiExplorer(opts =>
+    }).AddApiExplorer();
+
+    builder.Services.Configure<ApiExplorerOptions>(opts =>
     {
         opts.GroupNameFormat           = "'v'VVV";
         opts.SubstituteApiVersionInUrl = true;
@@ -73,10 +76,10 @@ try
         opts.DefaultRequestCulture = new RequestCulture("ar-SA");
         opts.SupportedCultures     = supported;
         opts.SupportedUICultures   = supported;
-        opts.RequestCultureProviders = new[]
+        opts.RequestCultureProviders = new List<IRequestCultureProvider>
         {
             new AcceptLanguageHeaderRequestCultureProvider(),
-            new QueryStringRequestCultureProvider()   // ?culture=en-US for testing
+            new QueryStringRequestCultureProvider()
         };
     });
 
@@ -205,7 +208,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         using var scope = app.Services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<ClubOS.Infrastructure.Persistence.ApplicationDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<ClubOS.Infrastructure.Persistence.AppDbContext>();
         await db.Database.MigrateAsync();
     }
 

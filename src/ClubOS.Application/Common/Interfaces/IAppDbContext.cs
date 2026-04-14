@@ -9,7 +9,7 @@ namespace ClubOS.Application.Common.Interfaces;
 /// EF Core DbContext interface used by Application layer.
 /// Keeps Application layer independent of EF Core implementation details.
 /// </summary>
-public interface IApplicationDbContext
+public interface IAppDbContext
 {
     DbSet<Tenant> Tenants { get; }
     DbSet<Academy> Academies { get; }

@@ -7,10 +7,10 @@ namespace ClubOS.Application.Features.Clubs.Queries;
 
 public sealed class GetClubDepartmentsQueryHandler : IRequestHandler<GetClubDepartmentsQuery, List<DepartmentDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetClubDepartmentsQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetClubDepartmentsQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

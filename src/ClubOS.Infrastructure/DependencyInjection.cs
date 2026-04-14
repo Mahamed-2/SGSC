@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Npgsql;
 
 namespace ClubOS.Infrastructure;
 
@@ -21,11 +22,14 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         // ── DATABASE ──────────────────────────────────────────────────────────
-        services.AddDbContext<ApplicationDbContext>(options =>
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddNpgsqlDataSource(connectionString!);
+
+        services.AddDbContext<AppDbContext>((sp, options) =>
         {
             options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection"),
-                npgsql => npgsql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
+                sp.GetRequiredService<NpgsqlDataSource>(),
+                npgsql => npgsql.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
             );
 
             // Enable detailed errors only in non-production
@@ -36,8 +40,8 @@ public static class DependencyInjection
             }
         });
 
-        services.AddScoped<IApplicationDbContext>(provider =>
-            provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IAppDbContext>(provider =>
+            provider.GetRequiredService<AppDbContext>());
 
         // ── IDENTITY ──────────────────────────────────────────────────────────
         services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -45,7 +49,7 @@ public static class DependencyInjection
             options.Password.RequiredLength = 8;
             options.User.RequireUniqueEmail = true;
         })
-        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
         services.AddScoped<IJwtService, JwtService>();
@@ -72,9 +76,34 @@ public static class DependencyInjection
 
         // ── HEALTH CHECKS ─────────────────────────────────────────────────────
         services.AddHealthChecks()
-            .AddNpgsql(configuration.GetConnectionString("DefaultConnection")!, "postgresql")
-            .AddRedis(configuration.GetConnectionString("Redis")!, "redis");
-
+            .AddTypeActivatedCheck<NpgsqlDataSourceHealthCheck>("postgresql")
+            .AddRedis(redisConnectionString: configuration.GetConnectionString("Redis")!, name: "redis");
+        
         return services;
+    }
+}
+
+/// <summary>
+/// Explicit HealthCheck implementation to avoid API naming collisions in .NET 10
+/// </summary>
+internal sealed class NpgsqlDataSourceHealthCheck : IHealthCheck
+{
+    private readonly NpgsqlDataSource _dataSource;
+    public NpgsqlDataSourceHealthCheck(NpgsqlDataSource dataSource) => _dataSource = dataSource;
+
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await using var connection = await _dataSource.OpenConnectionAsync(cancellationToken);
+            await using var command    = connection.CreateCommand();
+            command.CommandText        = "SELECT 1";
+            await command.ExecuteScalarAsync(cancellationToken);
+            return HealthCheckResult.Healthy();
+        }
+        catch (Exception ex)
+        {
+            return HealthCheckResult.Unhealthy(exception: ex);
+        }
     }
 }

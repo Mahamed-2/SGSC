@@ -13,10 +13,10 @@ namespace ClubOS.API.Controllers;
 [Route("api/v1/clubs/{clubId}/medical")]
 public class MedicalController : ControllerBase
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public MedicalController(IApplicationDbContext context, ITenantContext tenantContext)
+    public MedicalController(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -32,7 +32,7 @@ public class MedicalController : ControllerBase
             .OrderByDescending(r => r.OccurredAt)
             .ToListAsync();
 
-        return Ok(ApiResponse<List<InjuryReport>>.SuccessResponse(reports));
+        return Ok(ApiResponse<List<InjuryReport>>.Ok(reports));
     }
 
     [HttpGet("fitness-tests")]
@@ -45,7 +45,7 @@ public class MedicalController : ControllerBase
             .OrderByDescending(t => t.TestedAt)
             .ToListAsync();
 
-        return Ok(ApiResponse<List<FitnessTest>>.SuccessResponse(tests));
+        return Ok(ApiResponse<List<FitnessTest>>.Ok(tests));
     }
 }
 
@@ -54,10 +54,10 @@ public class MedicalController : ControllerBase
 [Route("api/v1/clubs/{clubId}/finance")]
 public class FinanceController : ControllerBase
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public FinanceController(IApplicationDbContext context, ITenantContext tenantContext)
+    public FinanceController(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -73,7 +73,7 @@ public class FinanceController : ControllerBase
             .Where(b => b.FiscalYear == year)
             .ToListAsync();
 
-        return Ok(ApiResponse<List<BudgetItem>>.SuccessResponse(budget));
+        return Ok(ApiResponse<List<BudgetItem>>.Ok(budget));
     }
 
     [HttpGet("contracts")]
@@ -85,7 +85,7 @@ public class FinanceController : ControllerBase
             .AsNoTracking()
             .ToListAsync();
 
-        return Ok(ApiResponse<List<SponsorshipContract>>.SuccessResponse(contracts));
+        return Ok(ApiResponse<List<SponsorshipContract>>.Ok(contracts));
     }
 }
 
@@ -94,10 +94,10 @@ public class FinanceController : ControllerBase
 [Route("api/v1/clubs/{clubId}/hr")]
 public class HrController : ControllerBase
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public HrController(IApplicationDbContext context, ITenantContext tenantContext)
+    public HrController(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -112,6 +112,6 @@ public class HrController : ControllerBase
             .AsNoTracking()
             .ToListAsync();
 
-        return Ok(ApiResponse<List<StaffProfile>>.SuccessResponse(profiles));
+        return Ok(ApiResponse<List<StaffProfile>>.Ok(profiles));
     }
 }

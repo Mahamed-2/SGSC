@@ -77,10 +77,10 @@ public sealed class TenantIsolationHandler : AuthorizationHandler<TenantIsolatio
 /// </summary>
 public sealed class SaudiComplianceHandler : AuthorizationHandler<SaudiComplianceRequirement>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ILogger<SaudiComplianceHandler> _logger;
 
-    public SaudiComplianceHandler(IApplicationDbContext context, ILogger<SaudiComplianceHandler> logger)
+    public SaudiComplianceHandler(IAppDbContext context, ILogger<SaudiComplianceHandler> logger)
     {
         _context = context;
         _logger  = logger;

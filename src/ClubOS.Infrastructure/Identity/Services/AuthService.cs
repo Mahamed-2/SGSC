@@ -12,14 +12,14 @@ public sealed class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IJwtService _jwtService;
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ILogger<AuthService> _logger;
 
     public AuthService(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IJwtService jwtService,
-        IApplicationDbContext context,
+        IAppDbContext context,
         ILogger<AuthService> logger)
     {
         _userManager   = userManager;

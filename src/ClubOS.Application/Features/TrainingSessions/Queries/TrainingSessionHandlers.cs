@@ -10,10 +10,10 @@ namespace ClubOS.Application.Features.TrainingSessions.Queries;
 
 public sealed class GetTrainingSessionsQueryHandler : IRequestHandler<GetTrainingSessionsQuery, List<TrainingSessionDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetTrainingSessionsQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetTrainingSessionsQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -45,10 +45,10 @@ public sealed class GetTrainingSessionsQueryHandler : IRequestHandler<GetTrainin
 
 public sealed class CreateTrainingSessionCommandHandler : IRequestHandler<CreateTrainingSessionCommand, Guid>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public CreateTrainingSessionCommandHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public CreateTrainingSessionCommandHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

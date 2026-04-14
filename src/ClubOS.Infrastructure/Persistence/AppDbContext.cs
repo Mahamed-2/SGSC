@@ -11,13 +11,13 @@ using System.Reflection;
 
 namespace ClubOS.Infrastructure.Persistence;
 
-public sealed class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IApplicationDbContext
+public sealed class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IAppDbContext
 {
     private readonly IMediator _mediator;
     private readonly ITenantContext _tenantContext;
 
-    public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
+    public AppDbContext(
+        DbContextOptions<AppDbContext> options,
         IMediator mediator,
         ITenantContext tenantContext) : base(options)
     {

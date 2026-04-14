@@ -11,10 +11,10 @@ namespace ClubOS.Application.Features.Players.Queries;
 
 public sealed class GetPlayersQueryHandler : IRequestHandler<GetPlayersQuery, PaginatedResult<PlayerDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetPlayersQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetPlayersQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -58,10 +58,10 @@ public sealed class GetPlayersQueryHandler : IRequestHandler<GetPlayersQuery, Pa
 
 public sealed class GetPlayerByIdQueryHandler : IRequestHandler<GetPlayerByIdQuery, PlayerDetailDto?>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetPlayerByIdQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetPlayerByIdQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

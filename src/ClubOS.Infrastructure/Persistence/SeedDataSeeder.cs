@@ -8,7 +8,7 @@ namespace ClubOS.Infrastructure.Persistence;
 
 public static class SeedDataSeeder
 {
-    public static async Task SeedAlFaisalyDemoAsync(ApplicationDbContext context, ILogger logger)
+    public static async Task SeedAlFaisalyDemoAsync(AppDbContext context, ILogger logger)
     {
         try
         {

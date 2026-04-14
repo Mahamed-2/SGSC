@@ -10,10 +10,10 @@ namespace ClubOS.Application.Features.Members.Queries;
 
 public sealed class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, PaginatedResult<MemberDto>>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetMembersQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetMembersQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -63,10 +63,10 @@ public sealed class GetMembersQueryHandler : IRequestHandler<GetMembersQuery, Pa
 
 public sealed class GetMemberByIdQueryHandler : IRequestHandler<GetMemberByIdQuery, MemberDto?>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public GetMemberByIdQueryHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public GetMemberByIdQueryHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

@@ -10,10 +10,10 @@ namespace ClubOS.Application.Features.Players.Commands;
 
 public sealed class CreatePlayerCommandHandler : IRequestHandler<CreatePlayerCommand, Guid>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public CreatePlayerCommandHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public CreatePlayerCommandHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;
@@ -45,10 +45,10 @@ public sealed class CreatePlayerCommandHandler : IRequestHandler<CreatePlayerCom
 
 public sealed class UpdatePlayerCommandHandler : IRequestHandler<UpdatePlayerCommand, bool>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly ITenantContext _tenantContext;
 
-    public UpdatePlayerCommandHandler(IApplicationDbContext context, ITenantContext tenantContext)
+    public UpdatePlayerCommandHandler(IAppDbContext context, ITenantContext tenantContext)
     {
         _context = context;
         _tenantContext = tenantContext;

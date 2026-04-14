@@ -10,10 +10,10 @@ namespace ClubOS.API.Controllers;
 [Authorize(Roles = "SystemAdmin")]
 public class DemoController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly AppDbContext _context;
     private readonly ILogger<DemoController> _logger;
 
-    public DemoController(ApplicationDbContext context, ILogger<DemoController> logger)
+    public DemoController(AppDbContext context, ILogger<DemoController> logger)
     {
         _context = context;
         _logger = logger;
