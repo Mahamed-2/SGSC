@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "cleanUrls": true,
+  "regions": ["iad1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://alfaisalyfc.net https://images.unsplash.com https://*.clubos.sa; connect-src 'self' https://*.vercel-storage.com;"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "/api/v1/:path*"
+    }
+  ],
+  "env": {
+    "DEMO_MODE": "true",
+    "SLM_SIMULATION_LATENCY_MS": "800",
+    "TENANT_CLUB_ID": "alfaisaly_fc",
+    "NEXT_PUBLIC_BRAND_PRIMARY": "#006633",
+    "NEXT_PUBLIC_TIMEZONE": "Asia/Riyadh"
+  }
+}
