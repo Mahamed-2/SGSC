@@ -11,5 +11,10 @@
     "start": "npm run start --prefix frontend",
     "lint": "npm run lint --prefix frontend",
     "install-all": "npm install --prefix frontend && npm install"
+  },
+  "dependencies": {
+    "next": "16.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   }
 }
