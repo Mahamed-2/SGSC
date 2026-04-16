@@ -36,6 +36,9 @@
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.2"
   },
+  "overrides": {
+    "@swc/helpers": "0.5.21"
+  },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@types/react": "^19.0.0",
