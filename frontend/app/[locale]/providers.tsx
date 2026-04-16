@@ -5,6 +5,36 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 
+// Suppress React 19 "Encountered a script tag while rendering React component" warning 
+// which is triggered by next-themes injecting a script for theme flashing prevention.
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  const originalError = console.error;
+  console.error = (...args: any[]) => {
+    if (
+      typeof args[0] === "string" && 
+      args[0].includes("Encountered a script tag while rendering React component")
+    ) {
+      return;
+    }
+    originalError(...args);
+  };
+}
+
+// Suppress React 19 "Encountered a script tag while rendering React component" warning 
+// which is triggered by next-themes injecting a script for theme flashing prevention.
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  const originalError = console.error;
+  console.error = (...args: any[]) => {
+    if (
+      typeof args[0] === "string" && 
+      args[0].includes("Encountered a script tag while rendering React component")
+    ) {
+      return;
+    }
+    originalError(...args);
+  };
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

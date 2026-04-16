@@ -15,7 +15,15 @@ import { usePermissions } from "@/hooks/usePermissions";
 import type { NavItem } from "@/types";
 
 // ── Nav configuration ──────────────────────────────────────────────────────────
-const NAV_ITEMS = [
+interface SidebarItem {
+  key: string;
+  href: string;
+  icon: string;
+  roles: string[];
+  badge?: number | string;
+}
+
+const NAV_ITEMS: SidebarItem[] = [
   { key: "dashboard", href: "/dashboard", icon: "LayoutDashboard", roles: ["SystemAdmin", "TenantAdmin", "AcademyManager", "Coach", "Staff"] },
   { key: "members", href: "/dashboard/members", icon: "Users", roles: ["SystemAdmin", "TenantAdmin", "AcademyManager", "Coach"] },
   { key: "academies", href: "/dashboard/academies", icon: "Building2", roles: ["SystemAdmin", "TenantAdmin", "AcademyManager"] },

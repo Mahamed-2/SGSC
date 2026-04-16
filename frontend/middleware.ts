@@ -9,6 +9,11 @@ const intlMiddleware = createMiddleware(routing);
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
+  // 0. Skip for MSW service worker
+  if (pathname === '/mockServiceWorker.js') {
+    return NextResponse.next();
+  }
+
   // 1. Path Parsing
   const pathParts = pathname.split('/').filter(Boolean);
   const locale = pathParts[0] || 'ar-SA';
@@ -55,7 +60,7 @@ export default async function middleware(request: NextRequest) {
 
   // 5. Audit Logging (Demo Simulation)
   if (pathname.startsWith('/api/v1/')) {
-    const ip = request.ip ?? '127.0.0.1';
+    const ip = (request as any).ip ?? '127.0.0.1';
     console.log(`[Demo Audit] API Interaction: ${pathname} from IP: ${ip} | Tenant: ${tenantId}`);
   }
 
@@ -67,6 +72,6 @@ export const config = {
     '/', 
     '/(ar-SA|en-US)/:path*', 
     '/api/v1/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+    '/((?!api|_next/static|_next/image|favicon.ico|mockServiceWorker.js).*)'
   ]
 };

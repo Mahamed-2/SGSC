@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/lib/store/useStore";
+import { useAuth, useHydration } from "@/lib/store/useStore";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -17,20 +17,27 @@ export function ProtectedRoute({
   allowedDepartments,
 }: ProtectedRouteProps) {
   const { isAuthenticated, user } = useAuth();
+  const hasHydrated = useHydration();
   const router = useRouter();
   const pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   useEffect(() => {
+    // Wait for hydration to avoid incorrect redirects on first render
+    if (!hasHydrated) return;
+
     // 1. Is Authenticated?
     if (!isAuthenticated || !user) {
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
+    // Now we know user is defined
+    const currentUser = user;
+
     // 2. Role Check
     if (allowedRoles && allowedRoles.length > 0) {
-      const hasRole = allowedRoles.includes(user.role);
+      const hasRole = allowedRoles.includes(currentUser.role);
       if (!hasRole) {
         setIsAuthorized(false);
         router.push("/unauthorized");
@@ -39,12 +46,11 @@ export function ProtectedRoute({
     }
 
     // 3. Department Check (if applicable)
-    // Assuming user object has a departmentIds string[] field or similar in the real API payload
     if (allowedDepartments && allowedDepartments.length > 0) {
-      const userDepartments: string[] = typeof user.clubId === 'string' ? [user.clubId] : []; // Fallback for mockup
+      const userDepartments: string[] = typeof currentUser.tenantId === 'string' ? [currentUser.tenantId] : [];
       // Check intersection
       const hasDept = allowedDepartments.some((d) => userDepartments.includes(d));
-      if (!hasDept && user.role !== "SystemAdmin") {
+      if (!hasDept && currentUser.role !== "SystemAdmin") {
         setIsAuthorized(false);
         router.push("/unauthorized");
         return;

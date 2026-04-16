@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Google Fonts ──────────────────────────────────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap");
-
-/* ── CSS Custom Properties (Design Tokens) ─────────────────────────────────── */
+/* -- Typography & Google Fonts ---------------------------------------------- */
 :root {
-  --font-inter: "Inter", sans-serif;
-  --font-cairo: "Cairo", sans-serif;
+  --font-sans:     var(--font-mulish), system-ui, sans-serif;
+  --font-arabic:   var(--font-tajawal), "Tahoma", "Arial", sans-serif;
 
-  /* Brand - Al-Faisaly FC Official Palette */
-  --color-brand:        #006633; /* Primary Al-Faisaly Green */
-  --color-brand-dark:   #004d26;
-  --color-brand-light:  #2d9e2d;
-  --color-accent-gold:  #D4AF37; /* Al-Faisaly Gold */
+/* -- CSS Custom Properties (Design Tokens) ----------------------------------- */
+  /* Brand - Al-Faisaly FC Official Palette (Maroon/Burgundy) */
+  --color-brand:        #990101; /* Primary Al-Faisaly Maroon */
+  --color-brand-dark:   #890101;
+  --color-brand-light:  #930101;
+  --color-accent-gold:  #C5A059; /* Refined Gold */
 
   /* Surfaces */
   --color-bg:           #f8fafc;
@@ -32,7 +30,7 @@
   --topbar-height:      3.75rem;
 }
 
-/* ── Dark Mode ──────────────────────────────────────────────────────────────── */
+/* -- Dark Mode ---------------------------------------------------------------- */
 .dark {
   --color-bg:           #0b1120;
   --color-surface:      #131c2e;
@@ -42,7 +40,7 @@
   --color-ink-faint:    #475569;
 }
 
-/* ── Base ───────────────────────────────────────────────────────────────────── */
+/* -- Base --------------------------------------------------------------------- */
 @layer base {
   * {
     @apply border-surface-border;
@@ -58,10 +56,10 @@
     color: var(--color-ink);
   }
 
-  /* Arabic content uses Cairo; RTL direction */
+  /* Arabic content uses Tajawal; RTL direction */
   [lang="ar"],
   [dir="rtl"] {
-    font-family: var(--font-cairo);
+    font-family: var(--font-arabic);
     direction: rtl;
   }
 
@@ -70,7 +68,7 @@
   }
 }
 
-/* ── Component Utilities ────────────────────────────────────────────────────── */
+/* -- Component Utilities ------------------------------------------------------ */
 @layer components {
   .card {
     @apply bg-white dark:bg-surface rounded-2xl border border-surface-border shadow-card;
@@ -115,12 +113,12 @@
   }
 }
 
-/* ── Scrollbar styling ──────────────────────────────────────────────────────── */
+/* -- Scrollbar styling -------------------------------------------------------- */
 ::-webkit-scrollbar       { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { @apply rounded-full bg-surface-border; }
 ::-webkit-scrollbar-thumb:hover { @apply bg-ink-faint; }
 
-/* ── RTL sidebar animation override ─────────────────────────────────────────── */
+/* -- RTL sidebar animation override ------------------------------------------- */
 [dir="rtl"] .slide-in { animation-name: slide-in-right; }
 [dir="ltr"] .slide-in { animation-name: slide-in-left; }

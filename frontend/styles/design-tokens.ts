@@ -4,11 +4,11 @@
 
 export const colors = {
   brand: {
-    primary:   "#2d9e2d",   // Al-Faisaly green – buttons, highlights, active states
-    secondary: "#217d21",   // Dark green – hover states
-    light:     "#a8e4a8",   // Light green – badges, tags
-    accent:    "#f0faf0",   // Tint – backgrounds, hover fills
-    white:     "#ffffff",   // Al-Faisaly white – sidebar background (light)
+    primary:   "#990101",   // Al-Faisaly maroon – buttons, highlights, active states
+    secondary: "#890101",   // Dark maroon – hover states
+    light:     "#ffdfdf",   // Light pink/maroon – badges, tags
+    accent:    "#fff1f1",   // Tint – backgrounds, hover fills
+    white:     "#ffffff",   // Al-Faisaly white
   },
   neutral: {
     900: "#0f172a",
@@ -34,8 +34,8 @@ export const colors = {
 
 export const typography = {
   fontFamily: {
-    sans:   '"Inter", ui-sans-serif, system-ui',
-    arabic: '"Cairo", Tahoma, Arial, sans-serif',
+    sans:   '"Mulish", ui-sans-serif, system-ui',
+    arabic: '"Tajawal", Tahoma, Arial, sans-serif',
   },
   scale: {
     "2xs": { size: "0.625rem", lineHeight: "0.875rem" },
@@ -69,7 +69,7 @@ export const borderRadius = {
 export const shadows = {
   card:      "0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)",
   cardHover: "0 4px 12px 0 rgb(0 0 0 / 0.08)",
-  glow:      "0 0 0 3px rgb(45 158 45 / 0.18)",
+  glow:      "0 0 0 3px rgb(153 1 1 / 0.18)",
   modal:     "0 20px 60px -10px rgb(0 0 0 / 0.25)",
 } as const;
 

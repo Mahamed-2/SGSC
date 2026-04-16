@@ -13,24 +13,24 @@ const config: Config = {
       // ── Al-Faisaly × ClubOS Brand Tokens ───────────────────────────────
       colors: {
         brand: {
-          50:  "#f0faf5",
-          100: "#e0f2ea",
-          200: "#b3dfcc",
-          300: "#66c099",
-          400: "#1aa166",
-          500: "#006633",  // ← PRIMARY (Al-Faisaly green)
-          600: "#005c2e",
-          700: "#004d26",
-          800: "#003d1f",
-          900: "#002e17",
-          950: "#001f10",
+          50:  "#fff1f1",
+          100: "#ffdfdf",
+          200: "#ffc5c5",
+          300: "#ff9d9d",
+          400: "#ff6464",
+          500: "#990101",  // ← PRIMARY (Al-Faisaly Maroon)
+          600: "#930101",
+          700: "#890101",
+          800: "#740101",
+          900: "#610101",
+          950: "#360000",
         },
         accent: {
-          gold: "#D4AF37",
-          "gold-accessible": "#91751d", // ← Darker gold for 4.5:1 contrast
+          gold: "#C5A059",
+          "gold-accessible": "#91751d", 
         },
         ring: {
-          DEFAULT: "#006633", // Primary green as focus ring
+          DEFAULT: "#990101", // Primary maroon as focus ring
         },
         surface: {
           DEFAULT: "#ffffff",
@@ -51,8 +51,8 @@ const config: Config = {
       },
 
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui"],
-        arabic: ["var(--font-cairo)", "Tahoma", "Arial", "sans-serif"],
+        sans: ["var(--font-mulish)", "ui-sans-serif", "system-ui"],
+        arabic: ["var(--font-tajawal)", "Tahoma", "Arial", "sans-serif"],
       },
 
       fontSize: {
@@ -92,6 +92,10 @@ const config: Config = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+      },
+      backgroundImage: {
+        "brand-gradient": "linear-gradient(to right, #930101, #990101, #930101)",
+        "hero-gradient":  "linear-gradient(-45deg, #8e1c1c, #990101)",
       },
       animation: {
         "fade-up":         "fade-up 0.3s ease-out",

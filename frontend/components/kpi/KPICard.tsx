@@ -1,5 +1,9 @@
+import React from "react";
 import { usePerformance } from "@/providers/PerformanceProvider";
 import dynamic from "next/dynamic";
+import { LucideIcon, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useLocalization } from "@/hooks/useLocalizedData";
 
 // Dynamic import for Recharts to split the bundle
 const Sparkline = dynamic(

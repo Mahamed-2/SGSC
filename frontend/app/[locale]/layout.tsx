@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_Arabic } from "next/font/google";
+import { Mulish, Tajawal } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import "../globals.css";
 import { Providers } from "./providers";
@@ -7,16 +7,18 @@ import { getMessages } from "next-intl/server";
 import { PerformanceProvider } from "@/providers/PerformanceProvider";
 import { DemoProvider } from "@/providers/DemoProvider";
 
-const inter = Inter({ 
+const mulish = Mulish({ 
   subsets: ["latin"], 
-  variable: "--font-inter",
-  display: "swap" 
+  variable: "--font-mulish",
+  display: "swap",
+  weight: ["400", "500", "700", "900"]
 });
 
-const notoAr = Noto_Sans_Arabic({ 
+const tajawal = Tajawal({ 
   subsets: ["arabic"], 
-  variable: "--font-noto-ar",
-  display: "swap" 
+  variable: "--font-tajawal",
+  display: "swap",
+  weight: ["400", "500", "700"]
 });
 
 export const metadata: Metadata = {
@@ -45,7 +47,7 @@ export default async function RootLayout({
     <html 
       lang={locale} 
       dir={direction} 
-      className={`${inter.variable} ${notoAr.variable}`}
+      className={`${mulish.variable} ${tajawal.variable}`}
       suppressHydrationWarning
     >
       <head>

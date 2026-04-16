@@ -58,3 +58,17 @@ export function useCurrency() {
 
   return { formatSAR };
 }
+
+/**
+ * useLocalization — General localization utilities.
+ */
+export function useLocalization() {
+  const locale = useLocale();
+  const isArabic = locale === "ar-SA";
+
+  const fmtNum = (num: number) => {
+    return new Intl.NumberFormat(locale).format(num);
+  };
+
+  return { isArabic, fmtNum };
+}

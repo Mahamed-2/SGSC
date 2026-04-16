@@ -41,36 +41,47 @@ const PERSONAS = {
 export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [activePersona, setActivePersona] = useState("admin");
-  const { setAuth, clearAuth } = useAuth();
+  
+  // Use granular selectors for actions to avoid reference changes
+  const setAuth = useStore((s) => s.setAuth);
+  const clearAuth = useStore((s) => s.clearAuth);
 
   useEffect(() => {
     const saved = localStorage.getItem("clubos_demo_mode");
     if (saved === "true") setIsDemoMode(true);
   }, []);
 
-  const toggleDemoMode = () => {
-    const newVal = !isDemoMode;
-    setIsDemoMode(newVal);
-    localStorage.setItem("clubos_demo_mode", String(newVal));
-    
-    if (newVal) {
-      // Auto-login as Demo Admin when toggling on
-      setPersona("admin");
-    } else {
-      clearAuth();
-    }
-  };
-
-  const setPersona = (personaId: string) => {
+  const setPersona = React.useCallback((personaId: string) => {
     setActivePersona(personaId);
     const persona = PERSONAS[personaId as keyof typeof PERSONAS];
     if (persona) {
       setAuth(persona as any, "demo-mock-token-" + personaId);
     }
-  };
+  }, [setAuth]);
+
+  const toggleDemoMode = React.useCallback(() => {
+    setIsDemoMode((prev) => {
+      const newVal = !prev;
+      localStorage.setItem("clubos_demo_mode", String(newVal));
+      
+      if (newVal) {
+        setPersona("admin");
+      } else {
+        clearAuth();
+      }
+      return newVal;
+    });
+  }, [setPersona, clearAuth]);
+
+  const contextValue = React.useMemo(() => ({
+    isDemoMode,
+    activePersona,
+    toggleDemoMode,
+    setPersona
+  }), [isDemoMode, activePersona, toggleDemoMode, setPersona]);
 
   return (
-    <DemoContext.Provider value={{ isDemoMode, activePersona, toggleDemoMode, setPersona }}>
+    <DemoContext.Provider value={contextValue}>
       {children}
     </DemoContext.Provider>
   );
