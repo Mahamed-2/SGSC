@@ -57,11 +57,14 @@ export default function DashboardPage() {
               {isArabic ? "تفعيل نمط العرض" : "Activate Demo Mode"}
             </button>
           )}
-          <button 
-            onClick={() => exportAsPDF()}
-            className="btn btn-secondary flex items-center gap-2"
-          >
-            <Download cla      <div ref={exportRef} className="space-y-10 pb-10">
+            <Download className="w-4 h-4" />
+            {isArabic ? "تصدير التقرير" : "Export Report"}
+          </button>
+        </div>
+      }
+    >
+      <div ref={exportRef} className="space-y-10 pb-10">
+
         {/* 1. Statistics Row (High Priority) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickStats.map((stat, i) => (
