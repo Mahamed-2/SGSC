@@ -42,9 +42,11 @@
   ],
   "env": {
     "DEMO_MODE": "true",
+    "NEXT_PUBLIC_MOCKS_ENABLED": "true",
     "SLM_SIMULATION_LATENCY_MS": "800",
     "TENANT_CLUB_ID": "alfaisaly_fc",
     "NEXT_PUBLIC_BRAND_PRIMARY": "#990101",
     "NEXT_PUBLIC_TIMEZONE": "Asia/Riyadh"
   }
+
 }

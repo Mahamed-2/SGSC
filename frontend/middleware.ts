@@ -72,6 +72,8 @@ export const config = {
     '/', 
     '/(ar-SA|en-US)/:path*', 
     '/api/v1/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico|mockServiceWorker.js).*)'
+    '/mockServiceWorker.js',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)'
   ]
 };
+

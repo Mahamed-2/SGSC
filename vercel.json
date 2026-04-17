@@ -6,7 +6,12 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "cleanUrls": true,
+  "env": {
+    "DEMO_MODE": "true",
+    "NEXT_PUBLIC_MOCKS_ENABLED": "true"
+  },
   "headers": [
+
     {
       "source": "/(.*)",
       "headers": [

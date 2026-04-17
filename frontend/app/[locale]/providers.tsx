@@ -49,7 +49,13 @@ async function initMocks() {
   if (typeof window === "undefined") return;
   if (process.env.NEXT_PUBLIC_MOCKS_ENABLED !== "true") return;
   const { worker } = await import("@/mocks/browser");
-  await worker.start({ onUnhandledRequest: "bypass" });
+  await worker.start({ 
+    onUnhandledRequest: "bypass",
+    serviceWorker: {
+      url: "/mockServiceWorker.js"
+    }
+  });
+
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
