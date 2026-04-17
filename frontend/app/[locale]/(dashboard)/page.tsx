@@ -61,83 +61,100 @@ export default function DashboardPage() {
             onClick={() => exportAsPDF()}
             className="btn btn-secondary flex items-center gap-2"
           >
-            <Download className="w-4 h-4" />
-            {isArabic ? "تصدير التقرير" : "Export Report"}
-          </button>
-        </div>
-      }
-    >
-      <DemoTour />
-      <div ref={exportRef} className="space-y-8 pb-10">
-        {/* 1. Executive Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 card p-6 bg-gradient-to-br from-brand-600 to-brand-800 text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]">
-            <div className="relative z-10">
-              <h2 className="text-2xl font-bold">{t("Strategic Overview", "النظرة الاستراتيجية")}</h2>
-              <p className="opacity-80 mt-1 max-w-md">
-                {isArabic 
-                  ? "أداء نادي الفيصلي مقارنة بالأهداف الاستراتيجية لعام 2026." 
-                  : "Al-Faisaly performance vs 2026 Strategic Objectives."}
-              </p>
+            <Download cla      <div ref={exportRef} className="space-y-10 pb-10">
+        {/* 1. Statistics Row (High Priority) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {quickStats.map((stat, i) => (
+            <div key={i} className="card p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow cursor-default bg-white border-transparent">
+               <div className="flex items-center justify-between mb-2">
+                 <div className="p-2 rounded-lg bg-brand-50 text-brand-600">
+                    <stat.icon className="w-5 h-5" />
+                 </div>
+                 <span className="text-[10px] font-bold text-success uppercase tracking-wider">+4.2%</span>
+               </div>
+               <div>
+                  <p className="text-xs font-semibold text-[#6b7280] uppercase tracking-wide">{stat.label}</p>
+                  <p className="text-3xl font-bold text-[#111827] mt-1">{stat.val}</p>
+               </div>
             </div>
-            
-            <div className="grid grid-cols-3 gap-4 relative z-10">
-              {quickStats.map((stat, i) => (
-                <div key={i} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
-                  <stat.icon className="w-5 h-5 text-amber-400 mb-2" />
-                  <p className="text-xs font-medium opacity-70 uppercase tracking-tighter">{stat.label}</p>
-                  <p className="text-xl font-bold mt-1">{stat.val}</p>
+          ))}
+          <div className="card p-6 bg-[#0f0f0f] text-white flex flex-col justify-between overflow-hidden relative">
+             <div className="relative z-10">
+                <p className="text-xs font-semibold opacity-60 uppercase tracking-wide">{isArabic ? "صحة النادي" : "Overall Health"}</p>
+                <p className="text-3xl font-bold mt-1">94.2</p>
+             </div>
+             <div className="w-full h-1 bg-[#1f1f1f] rounded-full mt-4 overflow-hidden">
+                <div className="h-full bg-brand-500 w-[94%]" />
+             </div>
+             {/* Abstract circle in background */}
+             <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-brand-500/10 rounded-full" />
+          </div>
+        </div>
+
+        {/* 2. Main Content Area */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+          {/* Department Monitoring */}
+          <div className="xl:col-span-2 space-y-6">
+            <div className="flex items-center justify-between border-b pb-4 border-[#e5e7eb]">
+              <div>
+                <h3 className="text-xl font-bold text-[#111827]">{t("Department Performance", "أداء الأقسام")}</h3>
+                <p className="text-sm text-[#6b7280]">{isArabic ? "مراقبة الأداء في الوقت الفعلي" : "Real-time divisional monitoring"}</p>
+              </div>
+              <button className="text-sm font-semibold text-brand-600 hover:text-brand-700">{isArabic ? "عرض الكل" : "View All"}</button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {departments.map((dept) => (
+                <div 
+                  key={dept.code} 
+                  onClick={() => setSelectedDept(dept)}
+                  className="card p-6 cursor-pointer group hover:border-brand-500/30 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={cn(
+                      "p-3 rounded-xl transition-colors",
+                      dept.status === "success" ? "bg-emerald-50 text-emerald-600" : 
+                      dept.status === "warning" ? "bg-amber-50 text-amber-600" : "bg-rose-50 text-rose-600"
+                    )}>
+                      <dept.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                       <h4 className="font-bold text-[#111827]">{isArabic ? dept.ar : dept.en}</h4>
+                       <div className="flex items-center gap-2 mt-1">
+                          <div className="flex-1 h-1.5 bg-[#f3f4f6] rounded-full">
+                            <div className={cn(
+                              "h-full rounded-full",
+                              dept.status === "success" ? "bg-emerald-500" : 
+                              dept.status === "warning" ? "bg-amber-500" : "bg-rose-500"
+                            )} style={{ width: `${dept.val}%` }} />
+                          </div>
+                          <span className="text-xs font-bold text-[#374151]">{dept.val}%</span>
+                       </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-
-            {/* Background pattern */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           </div>
 
-          <div className="card p-6 flex items-center justify-center bg-white dark:bg-dark-surface shadow-glow">
-            <ClubHealthGauge score={mockHealthScore.totalScore} />
-          </div>
-        </div>
-
-        {/* 2. Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-          <div className="xl:col-span-3 space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-ink">{t("Department Performance", "أداء الأقسام")}</h3>
-              <div className="flex gap-2">
-                <span className="flex items-center gap-1.5 text-2xs font-bold text-ink-faint">
-                  <span className="w-2 h-2 rounded-full bg-success" /> {isArabic ? "على المسار" : "On Track"}
-                </span>
-                <span className="flex items-center gap-1.5 text-2xs font-bold text-ink-faint">
-                  <span className="w-2 h-2 rounded-full bg-warning" /> {isArabic ? "تحت المراقبة" : "At Risk"}
-                </span>
-              </div>
-            </div>
-
-            <KPIGrid>
-              {departments.map((dept) => (
-                <KPICard
-                  key={dept.code}
-                  labelEn={dept.en}
-                  labelAr={dept.ar}
-                  value={dept.val}
-                  unit={dept.unit}
-                  trend={dept.trend as any}
-                  status={dept.status as any}
-                  icon={dept.icon}
-                  sparklineData={[
-                    { val: 40 }, { val: 65 }, { val: 55 }, { val: 80 }, { val: 75 }, { val: 90 }
-                  ]}
-                  onClick={() => setSelectedDept(dept)}
-                />
-              ))}
-            </KPIGrid>
-          </div>
-
-          {/* 3. Sidebar Timeline */}
-          <div className="xl:col-span-1 min-h-[500px]">
-            <ActivityTimeline />
+          {/* Activity Feed and Insights */}
+          <div className="space-y-8">
+             <div className="card p-6">
+                <h3 className="text-lg font-bold text-[#111827] mb-6 flex items-center gap-2">
+                   <Calendar className="w-5 h-5 text-brand-500" />
+                   {isArabic ? "النشاط الأخير" : "Recent Activity"}
+                </h3>
+                <ActivityTimeline />
+             </div>
+             
+             <div className="card p-6 border-l-4 border-l-brand-500">
+                <h4 className="text-sm font-bold text-brand-600 uppercase tracking-widest">{isArabic ? "رؤية الذكاء الاصطناعي" : "AI Insight"}</h4>
+                <p className="mt-2 text-sm text-[#374151] leading-relaxed">
+                   {isArabic 
+                     ? "بناءً على اتجاهات الميزانية الحالية، نوصي بتحسين الإنفاق في قسم المسؤولية الاجتماعية." 
+                     : "Based on current budget trends, we recommend optimizing Community spending for Q3."}
+                </p>
+             </div>
           </div>
         </div>
       </div>

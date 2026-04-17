@@ -9,26 +9,33 @@
 
 /* -- CSS Custom Properties (Design Tokens) ----------------------------------- */
   /* Brand - Al-Faisaly FC Official Palette (Maroon/Burgundy) */
-  --color-brand:        #990101; /* Primary Al-Faisaly Maroon */
+  --color-brand:        #990101;
   --color-brand-dark:   #890101;
-  --color-brand-light:  #930101;
-  --color-accent-gold:  #C5A059; /* Refined Gold */
+  --color-brand-light:  #a90101;
+  --color-accent-gold:  #C5A059;
 
-  /* Surfaces */
-  --color-bg:           #f8fafc;
+  /* Enterprise Surfaces */
+  --color-bg:           #f3f4f6;
   --color-surface:      #ffffff;
-  --color-border:       #e2e8f0;
+  --color-border:       #e5e7eb;
+  
+  /* Sidebar High-Contrast */
+  --sidebar-bg:         #0f0f0f;
+  --sidebar-ink:        #9ca3af;
+  --sidebar-active:     #ffffff;
 
-  /* Text */
-  --color-ink:          #0f172a;
-  --color-ink-muted:    #475569;
-  --color-ink-faint:    #94a3b8;
+  /* Text & Contrast */
+  --color-ink:          #111827;
+  --color-ink-muted:    #374151;
+  --color-ink-faint:    #6b7280;
 
-  /* Sidebar */
-  --sidebar-width:      16rem;
-  --sidebar-collapsed:  4.5rem;
-  --topbar-height:      3.75rem;
+  /* Dimensions & Radius */
+  --sidebar-width:      17rem;
+  --sidebar-collapsed:  5rem;
+  --topbar-height:      4rem;
+  --radius-enterprise:  1rem;
 }
+
 
 /* -- Dark Mode ---------------------------------------------------------------- */
 .dark {
@@ -71,21 +78,24 @@
 /* -- Component Utilities ------------------------------------------------------ */
 @layer components {
   .card {
-    @apply bg-white dark:bg-surface rounded-2xl border border-surface-border shadow-card;
+     @apply bg-white dark:bg-surface border border-surface-border shadow-card mb-6;
+     border-radius: var(--radius-enterprise);
   }
-
+ 
   .card-hover {
-    @apply transition-shadow duration-200 hover:shadow-card-hover;
+    @apply transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
   }
-
+ 
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2
-           text-sm font-medium text-white shadow-sm
+    @apply inline-flex items-center gap-2 bg-brand-500 px-6 py-2.5
+           text-sm font-semibold text-white shadow-sm
            hover:bg-brand-600 active:bg-brand-700
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500
            disabled:opacity-50 disabled:cursor-not-allowed
-           transition-colors duration-150;
+           transition-all duration-150;
+    border-radius: calc(var(--radius-enterprise) / 2);
   }
+
 
   .btn-ghost {
     @apply inline-flex items-center gap-2 rounded-xl px-4 py-2

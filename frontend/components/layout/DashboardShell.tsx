@@ -25,11 +25,12 @@ export function DashboardShell({ children, title, subtitle, actions }: Dashboard
   return (
     <div
       className={cn(
-        "flex min-h-screen bg-surface-muted",
+        "flex min-h-screen bg-[#f9fafb] dark:bg-[#0b1120]",
         isRTL ? "flex-row-reverse" : "flex-row"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >
+
       {/* ── A11y: Skip Link ─────────────────────────────────────────────── */}
       <a
         href="#main-content"
