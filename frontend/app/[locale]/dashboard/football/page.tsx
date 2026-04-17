@@ -70,7 +70,7 @@ export default function FootballDashboard() {
         </div>
 
         {/* 2. Navigation Tabs */}
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-dark-border">
+        <div className="flex items-center justify-between border-b border-surface-border">
           <div className="flex gap-8">
             {tabs.map((tab) => (
               <button
@@ -95,10 +95,11 @@ export default function FootballDashboard() {
           <div className="flex items-center gap-3 pb-2 text-ink-faint">
             <Search className="w-4 h-4 cursor-pointer hover:text-ink-muted" />
             <Filter className="w-4 h-4 cursor-pointer hover:text-ink-muted" />
-            <div className="h-4 w-px bg-slate-200" />
+            <div className="h-4 w-px bg-surface-border" />
             <Settings className="w-4 h-4 cursor-pointer hover:text-ink-muted" />
           </div>
         </div>
+
 
         {/* 3. Tab Content */}
         <div className="animate-fade-up">
@@ -120,11 +121,11 @@ export default function FootballDashboard() {
               <div className="card p-6 space-y-6">
                 <h3 className="font-bold text-ink">{isArabic ? "ملاحظات تكتيكية" : "Tactical Briefing"}</h3>
                 <div className="space-y-4">
-                  <div className="p-4 bg-slate-50 rounded-xl border-l-4 border-accent-gold">
+                  <div className="p-4 bg-surface-muted rounded-xl border-l-4 border-accent-gold">
                     <p className="text-xs font-bold text-ink-faint uppercase">Opposition Analysis (Al-Batin)</p>
                     <p className="text-sm mt-1">Al-Batin transition slowly in wide areas. Exploit via RW/LW pace.</p>
                   </div>
-                  <div className="p-4 bg-slate-50 rounded-xl border-l-4 border-brand-500">
+                  <div className="p-4 bg-surface-muted rounded-xl border-l-4 border-brand-500">
                     <p className="text-xs font-bold text-ink-faint uppercase">Set Piece Strategy</p>
                     <p className="text-sm mt-1">Corners to near-post for CB1. Defensive wall to stay compact.</p>
                   </div>
@@ -134,12 +135,13 @@ export default function FootballDashboard() {
           )}
 
           {activeTab === "drills" && (
-            <div className="flex flex-col items-center justify-center py-20 bg-slate-50/50 rounded-3xl border-2 border-dashed border-slate-200">
-              <PlayCircle className="w-12 h-12 text-slate-300 mb-4" />
+            <div className="flex flex-col items-center justify-center py-20 bg-surface-muted rounded-3xl border-2 border-dashed border-surface-border">
+              <PlayCircle className="w-12 h-12 text-ink-faint mb-4 opacity-50" />
               <p className="font-bold text-ink-muted">{isArabic ? "مكتبة التمارين قيد التحديث" : "Drill Library updating..."}</p>
               <p className="text-xs text-ink-faint mt-1">Integration with YouTube active.</p>
             </div>
           )}
+
         </div>
       </div>
     </DashboardShell>

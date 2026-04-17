@@ -18,30 +18,30 @@ const config: Config = {
           200: "#ffc5c5",
           300: "#ff9d9d",
           400: "#ff6464",
-          500: "#990101",  // ← PRIMARY (Al-Faisaly Maroon)
-          600: "#930101",
+          500: "var(--color-brand)",  // Use variable
+          600: "var(--color-brand-dark)",
           700: "#890101",
           800: "#740101",
           900: "#610101",
           950: "#360000",
         },
         accent: {
-          gold: "#C5A059",
+          gold: "var(--color-accent-gold)",
           "gold-accessible": "#91751d", 
         },
         ring: {
-          DEFAULT: "#990101", // Primary maroon as focus ring
+          DEFAULT: "var(--color-brand)",
         },
         surface: {
-          DEFAULT: "#ffffff",
-          muted:   "#f8fafc",
-          subtle:  "#f1f5f9",
-          border:  "#e2e8f0",
+          DEFAULT: "var(--color-surface)",
+          muted:   "var(--color-bg)",
+          subtle:  "var(--color-border)", // Re-mapping for consistency
+          border:  "var(--color-border)",
         },
         ink: {
-          DEFAULT: "#0f172a",
-          muted:   "#475569",
-          faint:   "#94a3b8",
+          DEFAULT: "var(--color-ink)",
+          muted:   "var(--color-ink-muted)",
+          faint:   "var(--color-ink-faint)",
         },
         // Semantic
         success:  { DEFAULT: "#16a34a", light: "#dcfce7" },
@@ -49,6 +49,7 @@ const config: Config = {
         danger:   { DEFAULT: "#dc2626", light: "#fee2e2" },
         info:     { DEFAULT: "#2563eb", light: "#dbeafe" },
       },
+
 
       fontFamily: {
         sans: ["var(--font-mulish)", "ui-sans-serif", "system-ui"],

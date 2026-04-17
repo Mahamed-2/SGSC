@@ -39,13 +39,17 @@
 
 /* -- Dark Mode ---------------------------------------------------------------- */
 .dark {
-  --color-bg:           #0b1120;
-  --color-surface:      #131c2e;
-  --color-border:       #1e2d40;
-  --color-ink:          #f1f5f9;
+  --color-bg:           #0f172a;
+  --color-surface:      #1e293b;
+  --color-border:       #334155;
+  --color-ink:          #f8fafc;
   --color-ink-muted:    #94a3b8;
-  --color-ink-faint:    #475569;
+  --color-ink-faint:    #64748b;
+  
+  /* Sidebar stays dark, but active item should pop more in dark mode */
+  --sidebar-active:     #ffffff;
 }
+
 
 /* -- Base --------------------------------------------------------------------- */
 @layer base {

@@ -48,7 +48,7 @@ export default function FinanceDashboard() {
                         {Math.round(percent)}%
                       </span>
                     </div>
-                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-surface-subtle rounded-full overflow-hidden">
                       <div 
                         className={cn("h-full rounded-full transition-all duration-1000", isOver ? "bg-red-500" : "bg-brand-500")}
                         style={{ width: `${percent}%` }}
@@ -63,7 +63,7 @@ export default function FinanceDashboard() {
 
         {/* Sponsorship Contracts */}
         <div className="card overflow-hidden">
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div className="p-6 border-b border-surface-border flex items-center justify-between bg-surface-muted">
             <h3 className="font-bold text-ink">{t("Sponsorships (CMA Compliant)", "الرعايات (متوافق مع هيئة السوق)")}</h3>
             <button className="btn btn-secondary py-1.5 px-3 text-2xs uppercase tracking-widest font-black">
               {isArabic ? "تصدير التقرير المالي" : "Export CMA Report"}
@@ -74,9 +74,9 @@ export default function FinanceDashboard() {
               { partner: "Harmah Energy", value: "2.5M SAR", expiry: "Dec 2027", vat: "3001..0003" },
               { partner: "Saudi Logistics Co", value: "1.2M SAR", expiry: "Oct 2026", vat: "3009..0003" },
             ].map((s, i) => (
-              <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-white hover:border-brand-200 transition-colors">
+              <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-surface-border bg-surface hover:border-brand-200 transition-colors">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-surface-subtle flex items-center justify-center">
                     <Wallet className="w-5 h-5 text-brand-600" />
                   </div>
                   <div>
@@ -92,6 +92,7 @@ export default function FinanceDashboard() {
             ))}
           </div>
         </div>
+
       </div>
     </DashboardShell>
   );
