@@ -16,7 +16,9 @@ import {
   FileCheck, Download, Calendar, ArrowRightLeft, Target,
   PlayCircle
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { mockHealthScore } from "@/mocks/kpiData";
+
 
 export default function DashboardPage() {
   const { isArabic, t } = useLocalization();
