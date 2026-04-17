@@ -57,9 +57,14 @@ export default function DashboardPage() {
               {isArabic ? "تفعيل نمط العرض" : "Activate Demo Mode"}
             </button>
           )}
+          <button 
+            onClick={() => exportAsPDF()}
+            className="btn btn-secondary flex items-center gap-2"
+          >
             <Download className="w-4 h-4" />
             {isArabic ? "تصدير التقرير" : "Export Report"}
           </button>
+
         </div>
       }
     >
